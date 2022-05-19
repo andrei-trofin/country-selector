@@ -106,3 +106,31 @@ def preprocess_world_bank_data(dataset):
     dataset = pivot_dataset(dataset)
 
     return dataset
+
+
+def categorize_secure_internet_servers_per_million_people(number_of_servers_per_one_million_people):
+    """Gets the number of secure internet servers per 1 million people and outputs a group.
+    I have come up with these groups so there is no statistical foundation for them.
+
+        Parameters
+        ----------
+        number_of_servers_per_one_million_people : float
+            A number representing secure internet servers per 1 million people
+
+        Returns
+        -------
+        string
+            one of the strings in {'low', 'lower_middle', 'middle', 'upper_middle', 'high'} representing
+            the group this number of server is part of
+        """
+    group = 'high'
+    if number_of_servers_per_one_million_people < 250:
+        group = 'low'
+    elif number_of_servers_per_one_million_people < 1000:
+        group = 'lower_middle'
+    elif number_of_servers_per_one_million_people < 10000:
+        group = 'middle'
+    elif number_of_servers_per_one_million_people < 60000:
+        group = 'upper_middle'
+
+    return group

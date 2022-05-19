@@ -1,7 +1,8 @@
 from unittest import TestCase
 import numpy as np
 from preprocessing_functions import categorize_gdp_per_capita_value, rename_columns,\
-    pivot_dataset, fill_nulls_keeping_one_value_column, preprocess_world_bank_data
+    pivot_dataset, fill_nulls_keeping_one_value_column, preprocess_world_bank_data, \
+    categorize_secure_internet_servers_per_million_people
 import pandas as pd
 
 
@@ -62,3 +63,9 @@ class TestPreprocessingFunctions(TestCase):
         self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Bulgaria', 'jobs'].values, np.array([4]))
         self.assertTrue(np.isnan(new_dataset.loc[new_dataset['country_name'] == 'Bulgaria', 'stores'].values[0]))
         self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Bulgaria', 'places'].values, np.array([2]))
+
+    def test_categorize_secure_internet_servers_per_million_people(self):
+        actual = [categorize_secure_internet_servers_per_million_people(x) for x in [
+            12, 13673, 667, 66666, 1045, 55999]]
+        expected = ['low', 'upper_middle', 'lower_middle', 'high', 'middle', 'upper_middle']
+        self.assertEqual(actual, expected)
