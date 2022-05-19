@@ -1,4 +1,5 @@
 from unittest import TestCase
+import numpy as np
 from preprocessing_functions import categorize_gdp_per_capita_value, rename_columns,\
     pivot_dataset, fill_nulls_keeping_one_value_column, preprocess_world_bank_data
 import pandas as pd
@@ -47,13 +48,17 @@ class TestPreprocessingFunctions(TestCase):
             'Country Code': ['DEN', 'DEN', 'DEN', "BUL", "BUL", "BUL"],
             'Series Name': ["jobs", "stores", "places", "jobs", "stores", "places"],
             'Series Code': ['AB1', 'AB2', 'AB3', 'AB1', 'AB2', 'AB3'],
-            '2020 [YR2020]': [5, 2, None, 4, None, 6],
-            '2021 [YR2021]': [None, 8, 3, None, None, 2]})
-        expected_values = {5, 8, 3, 4, None, 2}
+            '2020 [YR2020]': [5, 2, np.nan, 4, np.nan, 6],
+            '2021 [YR2021]': [np.nan, 8, 3, np.nan, np.nan, 2]})
         expected_columns = {'country_name', 'jobs', 'stores', 'places'}
         new_dataset = preprocess_world_bank_data(test_df)
 
         actual_columns = set(new_dataset.columns.values)
         self.assertSetEqual(actual_columns, expected_columns)
 
-        self.assertEqual(new_dataset.loc[0, 'jobs'], 5)
+        self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Denmark', 'jobs'].values, np.array([5]))
+        self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Denmark', 'stores'].values, np.array([8]))
+        self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Denmark', 'places'].values, np.array([3]))
+        self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Bulgaria', 'jobs'].values, np.array([4]))
+        self.assertTrue(np.isnan(new_dataset.loc[new_dataset['country_name'] == 'Bulgaria', 'stores'].values[0]))
+        self.assertEqual(new_dataset.loc[new_dataset['country_name'] == 'Bulgaria', 'places'].values, np.array([2]))
