@@ -35,12 +35,38 @@ country selector recommendation system.
 <details open>
 <summary>Show/Hide</summary>
 
-* data: this is a folder containing all of the Data
-    * initial_data: a folder which contains the excel file containing raw data
-    * dated folders: folders created on the date of their name as a result of running the notebook; these folders contain images and text files on which to conclude an analysis of the task habits
-* EDA To Do List.ipynb: the jupyter notebook containing all the logic
-* Daily "to do"s - an insight.pdf: a presentation that I created for myself as an exercise to create a presentation for stakeholders on future projects
-* requirements.txt: all the libraries used in the jupyter notebook
+* **data**: folder in which all data is stored
+    * Economy.xlsx: excel formatted data about economy of countries from https://data.worldbank.org/
+    * education.xlsx: excel formatted data about education of countries from https://data.worldbank.org/
+    * employment.xlsx: excel formatted data about employment of countries from https://data.worldbank.org/
+    * financial-indicators.xlsx: excel formatted data about financial indicators of countries from
+  https://data.worldbank.org/
+    * health.xlsx: excel formatted data about health of countries from https://data.worldbank.org/
+    * infrastructure.xlsx: excel formatted data about infrastructure of countries from https://data.worldbank.org/
+    * mean-temperature.nc: netcdf formatted data about temperatures of countries from 
+  https://climateknowledgeportal.worldbank.org/download-data
+    * population-and-environment.xlsx: excel formatted data about population and environment of countries from 
+  https://data.worldbank.org/
+    * poverty.xlsx: excel formatted data about poverty of countries from https://data.worldbank.org/
+    * precipitation.nc: excel formatted data about rain statistics of countries from 
+  https://climateknowledgeportal.worldbank.org/download-data
+    * private-sector.xlsx: excel formatted data about the private sector of countries from https://data.worldbank.org/
+    * public-sector.xlsx: excel formatted data about the public sector of countries from https://data.worldbank.org/
+    * world-happiness-2022.csv: the world happiness report from 2022
+    * crime-rates.json: json formatted data about crime index of countries from https://worldpopulationreview.com/
+    * cleaned_data.csv: csv formatted data about countries resulted from preprocessing; this data is used for the
+  application
+* **models**: folder in which models or scalers are stored
+* **notebooks**: where the jupyter notebooks and adjacent python scripts are stored
+  * **1. Data Preprocessing.ipynb**: notebook used for preprocessing all data about countries
+  * **python-scripts**: folder which contains python scripts used in notebooks and tests for functions where possible
+    * **development**: folder in which all python scripts reside
+      * **preprocessing_functions.py**: script containing functions used in notebooks
+      * **preprocessing_variables.py**: script containing variables used in notebooks
+    * **test**: folder containing test modules
+      * **test_preprocessing_functions.py**: unit test module for functions in preprocessing_functions.py
+* **research.txt**: text file I used to quickly find the most important factors for choosing a country where to move to
+* **images**: folder holding images used in the presentation file
 
 </details>
 
@@ -50,19 +76,28 @@ country selector recommendation system.
 <details open>
 <summary>Show/Hide</summary>
 
-What I had to begin with was just sheets of paper, each of them dated ad containing tasks that were checked as done or not done. So I had to decide how to approach getting them into my computer.
+The work here was done in the [data processing notebook.](./notebooks/1.Data%20Preprocessing.ipynb)
 
-First idea was, of course, manual labour. Then I thought: maybe I could use some form of character recognition and then use machine learning to split them into groups. But when I thought about it, I remembered that I did not build this to do list system with the intention of doing anything with it. Therefore I had no categories, just tasks. I decided that manually transcribing was my best bet, since I could see the tasks and categorize it myself. I also had to think of a system to track tasks within a day that were of the same category, some finished and some unfinished.
+I have downloaded data from different sites. I based my logic on research I have done in the 
+[research file](research.txt). I wanted to see what are the main factors that people look for when
+moving to a different country. After I have made a list, I went on and searched for data.
+Because I did not manage to find one single place in which to download all data, I did not spend additional time
+to learn the API of any particular site, but rather downloaded the raw data myself.
 
-I used Google Sheets to make it easier for me to find categories and such and this was the results I came to:
-
-<img src="images/todolist-excel.png" height=350/>
+<p align="center">
+  <img src="images/world-happiness.png" width="300"/>
+</p>
 <br>
 <br>
 
-Getting the right format of data was interesting to do because what I wanted to achieve in the end was the "success level" of the day. This was the number of tasks I have succeeded to do over the number of tasks I have planned to do. So categories that contain -x+y means that x tasks from that category did not succeed, while y did. And that there were a total of (x+y) tasks in that category that day.
+I have put all the data in the [data folder](./data/) and went through it all and tried to make one clean dataset.
+Some of the data such as precipitation, temperature, education, employment, poverty, private and public sector 
+did not make it into the final set due to the lack of values for the majority of the countries.
 
-Info about data preprocessing and getting to a reasonable data format to use within the code is available in the notebook.
+Therefore, the [final dataset](./data/cleaned_data.csv) contains data about 117 countries. This data refers to: 
+happiness, economy, crime rate, infrastructure, finance, health, population and environment. A total of 22 columns were 
+extracted, making this dataset a 117 x 22 dataframe. This is the dataset used to create clusters upon which the 
+application is built.
 
 </details>
 
@@ -72,8 +107,6 @@ Info about data preprocessing and getting to a reasonable data format to use wit
 <details open>
 <summary>Show/Hide</summary>
 
-This was the main idea of the project. What can the data tell me about the tasks that I have noted. For this to work, I had to come up with statistics I would like to see based on how I defined the data in the preprocessing step.
-
 </details>
 
 
@@ -82,19 +115,6 @@ This was the main idea of the project. What can the data tell me about the tasks
 <details open>
 <summary>Show/Hide</summary>
 
-This was a brainstorming step. I would think about the data structure and how I can mold it to tell me specific things.
-
-Ideas that I believed were important and/or interesting are:
-- tasks with most probability to fail
-- tasks with most probability to succeed
-- descriptive statistics about day success (IQR, median etc.)
-- total success rate per each category
-- productivity rates in time
-- heatmap for numerical values
-- plot success rate against number of tasks
-- define categories: quick, get_out_of_house, cleaning, work, physical, reading, mentality_of_day, talk_to_people and for each plot boxplots with success rate to see which activities you are most likely to do
-
-These are some of the things I wanted to see. All that I initially wanted to see is well documented in the notebook.
 
 </details>
 
@@ -104,24 +124,7 @@ These are some of the things I wanted to see. All that I initially wanted to see
 <details open>
 <summary>Show/Hide</summary>
 
-Some of the statistics were relevant number-wise
 
-
-<h5 align="center">Productivity per day statistics</h5>
-<p align="center">
-  <img src="images\\DaysSuccessDistribution.png" height=300/>
-</p>
-<br>
-<br>
-
-while others were more interesting to visualize as graphs
-
-<h5 align="center">Productivity per category</h5>
-<p align="center">
-  <img src="images\\ProductivityPerCategory.png" width=500/>
-</p>
-<br>
-<br>
 
 </details>
 
@@ -131,9 +134,6 @@ while others were more interesting to visualize as graphs
 <details open>
 <summary>Show/Hide</summary>
 
-There were great insights into my own organization whereabouts. This was all summarized in a
-[presentation](./Daily%20“to%20do”s%20-%20an%20insight.pdf) I created for myself. As I have done in the notebook, I will list some of the things I have learnt here.
-
 </details>
 
 ### 4.1 What did I learn?
@@ -141,11 +141,6 @@ There were great insights into my own organization whereabouts. This was all sum
 <details open>
 <summary>Show/Hide</summary>
 
-Firstly and most importantly, there were tasks which I consistently wanted to do and did not succeed (most of the time) in doing them. The solution for "curing" this would be to take one of these tasks and focus (almost) daily on it. This would in turn build a habit. When I am comfortable that I can succeed in this task on a daily basis, I can go ahead and repeat this process with the task such task.
-
-Another interesting fact is that there were relatively easy to do tasks (do not take a lot of time) that were mostly missed because of how I organized my day. This made me be more aware of my **actual** time within a day and plan accordingly.
-
-This is an out of data scope insight, but I see that when I do make these lists, I tend to get more done. So I will continue to create them. And I will also have a weekly paper to computer session when I transcribe to do lists from previous week. This will also hold me accountable to update this project and see how my behaviour changes.
 
 </details>
 
@@ -155,10 +150,5 @@ This is an out of data scope insight, but I see that when I do make these lists,
 <details open>
 <summary>Show/Hide</summary>
 
-There are some things that I would like to have in the future.
-
-- Have a script to run the jupyter notebook (and generate all the useful data) for data between 2 certain dates. This way I can track progress along time frames and not necessarily between start and current time.
-- Come up with more statistics to see. I am sure there are insights I have missed. But if in the future I can come back to this project with a fresh perspective I am sure I can come up with more useful insights to extract.
-- See if I can come up with some features for modelling and see if there's a day formula for guaranteed success.
 
 </details>
