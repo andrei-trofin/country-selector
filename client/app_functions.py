@@ -14,6 +14,9 @@ def load_data():
 
 def get_group(lc_value, na_value, cs_value, pg_value, s_value, td_value, group_scores):
     """
+    Function which outputs the group having indices values closest to indices values provided by the user.
+    If more groups have the same euclidean distance in terms of indices scores between group score and user score,
+    the first group that has this minimum value will be returned.
     :param group_scores: scores from each group on the given indices
     :param lc_value: living cost value, int
     :param na_value: natural areas value, int
@@ -79,6 +82,3 @@ def show_main_page(groups, group_scores, indices):
         countries = groups.get(get_group(
             lc_value, na_value, cs_value, people_generosity_value, s_value, td_value, group_scores))
         st.table(countries)
-
-
-
