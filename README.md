@@ -82,7 +82,7 @@ country selector recommendation system.
 <details open>
 <summary>Show/Hide</summary>
 
-The work here was done in the [data processing notebook.](./notebooks/1.Data%20Preprocessing.ipynb)
+The work here was done in the [data processing notebook.](./notebooks/1.%20Data%20Preprocessing.ipynb)
 
 I have downloaded data from different sites. I based my logic on research I have done in the
 [research file](research.txt). I wanted to see what are the main factors that people look for when
@@ -263,6 +263,6 @@ There are a few things I would improve this project with, if I am ever going to 
 and compute feature group mean; then each country group will have one feature group mean value, and I can just use
 quantiles as scores for indices)
 - improve UI: display top5 countries and have a button with "See more" which will render all the other countries
-- improve UI: display something like similarity score for each country (similraity with the cluster they are in)
+- improve UI: display something like similarity score for each country (similarity with the cluster they are in)
 
 </details>
