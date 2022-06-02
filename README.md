@@ -172,6 +172,9 @@ methods. The latter managed to lead to good enough results by keeping 3 generate
 
 In the end I opted for a K-Means clustering solution with 6 clusters. It did not have the highest silhouette score, but
 amongst the highest. It fitted my end goal, and I believe that there's always room for compromise.
+For each cluster, I also sorted the countries so that those that are most representative of their cluster are first in
+their group list.
+
 
 </details>
 
@@ -181,6 +184,37 @@ amongst the highest. It fitted my end goal, and I believe that there's always ro
 <details open>
 <summary>Show/Hide</summary>
 
+(Might not be always available)
+<br>
+Application link: http://54.226.224.89:8501/
+
+<p align="center">
+  <img src="./images/webapp-1.png" width="300"/>
+</p>
+<br>
+<br>
+
+<p align="center">
+  <img src="./images/webapp-2.png" width="300"/>
+</p>
+<br>
+<br>
+
+This is the end application. An end user can input his desires for the 6 aforementioned indices and get a list of
+countries which have values similar to those.
+
+I wanted to create an application because I wanted to experiment with deployment and also
+having an end product. The deployment was done using Amazon AWS.
+
+Steps to follow if you want to run the application on your machine:
+
+1. Pull this repository from git
+2. Make sure you have python and pip installed
+3. Install streamlit and numpy using pip
+4. Go to the client directory of this project, open a command line and type
+"streamlit run app.py"
+5. The web app should be accessible now at http://localhost:8501 or the provided link in your console
+
 </details>
 
 
@@ -189,6 +223,10 @@ amongst the highest. It fitted my end goal, and I believe that there's always ro
 <details open>
 <summary>Show/Hide</summary>
 
+You cannot divide world countries in very exact groups without missing vital parts out. This project was an interesting
+experiment to learn about clustering and project deployments. I am now more curious as to what kind of clustering
+projects would have a bigger impact and how they can help us when we deal with uncertainty.
+
 </details>
 
 ### 5.1 What did I learn?
@@ -196,6 +234,18 @@ amongst the highest. It fitted my end goal, and I believe that there's always ro
 <details open>
 <summary>Show/Hide</summary>
 
+This project was a great opportunity to try my hands at clustering. I have read about it, I have searched different 
+methods to cluster and how to evaluate clustering results. It was also nice to read about people's opinions about
+clustering as a general method. An interesting idea I have gotten is: we always look for patterns, even where there
+are none; it's just how our brains work.
+
+Philosophy aside, I discovered the streamlit library and how easy it is to make a web page using python. Another
+interesting addition to my toolkit was managing to deploy the app to the Amazon aws cloud service. It was also nice to
+use different feature extraction/selection methods and select the best out of them.
+
+I always like the feeling at the end of the project when I am writing the README file, making sure that everything is ok
+and well documented. It's the moment I can finally say: It's done. And the feeling when you've done something is one of
+the best, especially when you think about all the obstacles you encountered.
 
 </details>
 
@@ -205,5 +255,14 @@ amongst the highest. It fitted my end goal, and I believe that there's always ro
 <details open>
 <summary>Show/Hide</summary>
 
+There are a few things I would improve this project with, if I am ever going to attack it again:
+
+- get more data about more countries (and make sure it is actual data and not null)
+- try even more feature selection/extraction methods
+- have a more systematic approach to deciding group scores and indices selection (e.g. take groups of relevant features 
+and compute feature group mean; then each country group will have one feature group mean value, and I can just use
+quantiles as scores for indices)
+- improve UI: display top5 countries and have a button with "See more" which will render all the other countries
+- improve UI: display something like similarity score for each country (similraity with the cluster they are in)
 
 </details>
