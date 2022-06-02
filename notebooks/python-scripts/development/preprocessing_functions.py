@@ -134,3 +134,17 @@ def categorize_secure_internet_servers_per_million_people(number_of_servers_per_
         group = 'upper_middle'
 
     return group
+
+
+def inverse_feature_values(feature_series, scaler_type):
+    """
+    Function used to transform feature values so that the lowest value will be converted to highest and vice versa.
+    This is done so that all features have the same meaning: lower values = bad; higher values = good
+    :param scaler_type: type of scaler used for scaling data: min_max or standard
+    :param feature_series: the original values of the feature for each entry
+    :return: modified feature values for each entry
+    """
+    if scaler_type == "min_max":
+        return 1.0 - feature_series
+    else:
+        return - feature_series

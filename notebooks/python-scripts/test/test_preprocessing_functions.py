@@ -2,7 +2,7 @@ from unittest import TestCase
 import numpy as np
 from preprocessing_functions import categorize_gdp_per_capita_value, rename_columns,\
     pivot_dataset, fill_nulls_keeping_one_value_column, preprocess_world_bank_data, \
-    categorize_secure_internet_servers_per_million_people
+    categorize_secure_internet_servers_per_million_people, inverse_feature_values
 import pandas as pd
 
 
@@ -69,3 +69,13 @@ class TestPreprocessingFunctions(TestCase):
             12, 13673, 667, 66666, 1045, 55999]]
         expected = ['low', 'upper_middle', 'lower_middle', 'high', 'middle', 'upper_middle']
         self.assertEqual(actual, expected)
+
+    def test_inverse_feature_values_min_max(self):
+        actual = inverse_feature_values(pd.Series([1, 0.5, 0.3, 0.1]), "min_max")
+        expected = pd.Series([0, 0.5, 0.7, 0.9])
+        pd.testing.assert_series_equal(actual, expected)
+
+    def test_inverse_feature_values_standard(self):
+        actual = inverse_feature_values(pd.Series([-1, 0.5, 0.3, -2.1]), "standard")
+        expected = pd.Series([1, -0.5, -0.3, 2.1])
+        pd.testing.assert_series_equal(actual, expected)
