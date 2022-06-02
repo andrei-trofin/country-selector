@@ -41,12 +41,12 @@ country selector recommendation system.
   https://data.worldbank.org/
     * health.xlsx: excel formatted data about health of countries from https://data.worldbank.org/
     * infrastructure.xlsx: excel formatted data about infrastructure of countries from https://data.worldbank.org/
-    * mean-temperature.nc: netcdf formatted data about temperatures of countries from 
+    * mean-temperature.nc: netcdf formatted data about temperatures of countries from
   https://climateknowledgeportal.worldbank.org/download-data
-    * population-and-environment.xlsx: excel formatted data about population and environment of countries from 
+    * population-and-environment.xlsx: excel formatted data about population and environment of countries from
   https://data.worldbank.org/
     * poverty.xlsx: excel formatted data about poverty of countries from https://data.worldbank.org/
-    * precipitation.nc: excel formatted data about rain statistics of countries from 
+    * precipitation.nc: excel formatted data about rain statistics of countries from
   https://climateknowledgeportal.worldbank.org/download-data
     * private-sector.xlsx: excel formatted data about the private sector of countries from https://data.worldbank.org/
     * public-sector.xlsx: excel formatted data about the public sector of countries from https://data.worldbank.org/
@@ -59,7 +59,7 @@ country selector recommendation system.
     * groups.json: json file containing the 6 groups resulted from the clustering process
     * group_scores.json: json files containing scores for each group for the 6 indices I decided on in the
   clustering notebook
-    
+
 * **notebooks**: where the jupyter notebooks and adjacent python scripts are stored
   * **1. Data Preprocessing.ipynb**: notebook used for preprocessing all data about countries
   * **2. EDA and Clustering.ipynb**: notebook used for clustering which resulted in countries grouping
@@ -84,25 +84,25 @@ country selector recommendation system.
 
 The work here was done in the [data processing notebook.](./notebooks/1.Data%20Preprocessing.ipynb)
 
-I have downloaded data from different sites. I based my logic on research I have done in the 
+I have downloaded data from different sites. I based my logic on research I have done in the
 [research file](research.txt). I wanted to see what are the main factors that people look for when
 moving to a different country. After I have made a list, I went on and searched for data.
 Because I did not manage to find one single place in which to download all data, I did not spend additional time
 to learn the API of any particular site, but rather downloaded the raw data myself.
 
 <p align="center">
-  <img src="images/world-happiness.png" width="300"/>
+  <img src="images/world-happiness.png" width=700/>
 </p>
 <br>
 <br>
 
 I have put all the data in the [data folder](./data/) and went through it all and tried to make one clean dataset.
-Some of the data such as precipitation, temperature, education, employment, poverty, private and public sector 
+Some of the data such as precipitation, temperature, education, employment, poverty, private and public sector
 did not make it into the final set due to the lack of values for the majority of the countries.
 
-Therefore, the [final dataset](./data/cleaned_data.csv) contains data about 117 countries. This data refers to: 
-happiness, economy, crime rate, infrastructure, finance, health, population and environment. A total of 22 columns were 
-extracted, making this dataset a 117 x 22 dataframe. This is the dataset used to create clusters upon which the 
+Therefore, the [final dataset](./data/cleaned_data.csv) contains data about 117 countries. This data refers to:
+happiness, economy, crime rate, infrastructure, finance, health, population and environment. A total of 22 columns were
+extracted, making this dataset a 117 x 22 dataframe. This is the dataset used to create clusters upon which the
 application is built.
 
 </details>
@@ -115,7 +115,7 @@ application is built.
 
 In the [2nd notebook](./notebooks/2.%20EDA%20and%20Clustering.ipynb) of this project I experiment with clustering.
 What I wanted to find was a good grouping of countries such that I can build a web app
-that recommends what country you can move into based on certain criteria. These criteria would be discovered by 
+that recommends what country you can move into based on certain criteria. These criteria would be discovered by
 clustering: create groups via clustering, then find criteria for each group and note them on a scale. In the final app
 the user will choose a number on each scale and the application will output the most appropriate country group.
 
@@ -132,7 +132,7 @@ as redundant features. The correlation matrix also helped me see what kind of fe
 it was a group of 5 features that might have had something close to a linear relationship.
 
 <p align="center">
-  <img src="./images/correlation.png" width="300"/>
+  <img src="./images/correlation.png" width="800"/>
 </p>
 <br>
 <br>
@@ -147,25 +147,25 @@ it was a group of 5 features that might have had something close to a linear rel
 
 This is the main part of the project. After having read a little bit about all the clustering option offered by the
 sci-kit learn library, I have decided on the following 4 to try for my project: K-Means, DBSCAN, AffinityPropagation and
-AgglomerativeClustering. 
+AgglomerativeClustering.
 
 Because my data is unlabeled, the only way through which I could compare the algorithms was by comparing silhouette
-scores (the silhouette score measures how well the clustering are spaced between each other and how tight are points 
-within clusters) and other metrics. The other 2 metrics that I found relevant to use were the Calinski-Harabasz score 
+scores (the silhouette score measures how well the clustering are spaced between each other and how tight are points
+within clusters) and other metrics. The other 2 metrics that I found relevant to use were the Calinski-Harabasz score
 and the Davies-Bouldin score. These are both metrics used to measure how well the clusters are delimited.
 
-I have started with the requirement that I need at least 4 groups in order to have a meaningful end project. Less than 
+I have started with the requirement that I need at least 4 groups in order to have a meaningful end project. Less than
 4 groups would give me too many values in each group and make it hard for the end user to choose.
 
 The scores I would get using the features as they were did not seem to indicate good clustering. Therefore, I also
-used 
-[VarianceThreshold](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html) 
-and [PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html) as feature manipulation 
+used
+[VarianceThreshold](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.VarianceThreshold.html)
+and [PCA](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html) as feature manipulation
 methods. The latter managed to lead to good enough results by keeping 3 generated principal components
 (silhouette score over 0.3).
 
 <p align="center">
-  <img src="./images/PCA.png" width="300"/>
+  <img src="./images/PCA.png" width="500"/>
 </p>
 <br>
 <br>
@@ -189,13 +189,13 @@ their group list.
 Application link: http://54.226.224.89:8501/
 
 <p align="center">
-  <img src="./images/webapp-1.png" width="300"/>
+  <img src="./images/webapp-1.png" width="700"/>
 </p>
 <br>
 <br>
 
 <p align="center">
-  <img src="./images/webapp-2.png" width="300"/>
+  <img src="./images/webapp-2.png" width="700"/>
 </p>
 <br>
 <br>
@@ -234,7 +234,7 @@ projects would have a bigger impact and how they can help us when we deal with u
 <details open>
 <summary>Show/Hide</summary>
 
-This project was a great opportunity to try my hands at clustering. I have read about it, I have searched different 
+This project was a great opportunity to try my hands at clustering. I have read about it, I have searched different
 methods to cluster and how to evaluate clustering results. It was also nice to read about people's opinions about
 clustering as a general method. An interesting idea I have gotten is: we always look for patterns, even where there
 are none; it's just how our brains work.
@@ -259,7 +259,7 @@ There are a few things I would improve this project with, if I am ever going to 
 
 - get more data about more countries (and make sure it is actual data and not null)
 - try even more feature selection/extraction methods
-- have a more systematic approach to deciding group scores and indices selection (e.g. take groups of relevant features 
+- have a more systematic approach to deciding group scores and indices selection (e.g. take groups of relevant features
 and compute feature group mean; then each country group will have one feature group mean value, and I can just use
 quantiles as scores for indices)
 - improve UI: display top5 countries and have a button with "See more" which will render all the other countries
